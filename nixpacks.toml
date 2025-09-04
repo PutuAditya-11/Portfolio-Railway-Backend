@@ -1,0 +1,26 @@
+# nixpacks.toml
+[phases.setup]
+nixPkgs = [
+  "php82",
+  "php82Packages.mbstring",
+  "php82Packages.pdo_mysql",
+  "php82Packages.curl",
+  "php82Packages.fileinfo",
+  "php82Packages.openssl"
+]
+
+[phases.install]
+cmds = [
+  "composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader"
+]
+
+[phases.build]
+cmds = [
+  "php artisan key:generate --force || true",
+  "php artisan config:cache",
+  "php artisan route:cache",
+  "php artisan view:cache"
+]
+
+[start]
+cmd = "php artisan serve --host 0.0.0.0 --port $PORT"
