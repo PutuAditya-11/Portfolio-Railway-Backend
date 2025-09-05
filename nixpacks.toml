@@ -1,27 +1,22 @@
 [phases.setup]
 nixPkgs = [
   "php83",
-  "nginx",
-  "nodejs",
   "php83Extensions.curl",
   "php83Extensions.mbstring",
   "php83Extensions.pdo_mysql",
   "php83Extensions.tokenizer",
-  "php83Extensions.xml"
-]
-
-[phases.install]
-cmds = [
-  # install composer secara manual
-  "curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer",
-  "/usr/local/bin/composer install --no-dev --optimize-autoloader",
-  "npm install"
+  "php83Extensions.xml",
+  "composer"
 ]
 
 [phases.build]
 cmds = [
-  "npm run build"
+  "composer install --no-dev --optimize-autoloader",
+  "php artisan config:clear",
+  "php artisan route:clear",
+  "php artisan view:clear",
+  "php artisan cache:clear"
 ]
 
 [start]
-cmd = "php artisan config:clear && php artisan cache:clear && php artisan route:clear && php artisan view:clear && php artisan migrate --force && vendor/bin/heroku-php-nginx public/"
+cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
