@@ -5,8 +5,12 @@ nixPkgs = [
   "php83Extensions.mbstring",
   "php83Extensions.pdo_mysql",
   "php83Extensions.tokenizer",
-  "php83Extensions.xml",
-  "composer"
+  "php83Extensions.xml"
+]
+
+[phases.install]
+cmds = [
+  "curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer"
 ]
 
 [phases.build]
