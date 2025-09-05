@@ -3,7 +3,6 @@ nixPkgs = [
   "php83",
   "nginx",
   "nodejs",
-  "npm",
   "php83Extensions.curl",
   "php83Extensions.mbstring",
   "php83Extensions.pdo_mysql",
@@ -13,8 +12,9 @@ nixPkgs = [
 
 [phases.install]
 cmds = [
+  # install composer secara manual
   "curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer",
-  "composer install --no-dev --optimize-autoloader",
+  "/usr/local/bin/composer install --no-dev --optimize-autoloader",
   "npm install"
 ]
 
