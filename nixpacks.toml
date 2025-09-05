@@ -1,24 +1,27 @@
 [phases.setup]
 nixPkgs = [
   "php83",
+  "nginx",
   "php83Extensions.curl",
   "php83Extensions.mbstring",
   "php83Extensions.pdo_mysql",
   "php83Extensions.tokenizer",
-  "php83Extensions.xml",
-  "nginx",
-  "curl"
+  "php83Extensions.xml"
+]
+
+[phases.install]
+cmds = [
+  "curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer"
 ]
 
 [phases.build]
 cmds = [
-  # install composer
-  "curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer",
-  # pakai path absolut composer
   "/usr/local/bin/composer install --no-dev --optimize-autoloader",
-  # generate app key
-  "php artisan key:generate --force"
+  "php artisan config:clear",
+  "php artisan route:clear",
+  "php artisan view:clear",
+  "php artisan cache:clear"
 ]
 
 [start]
-cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
+cmd = "php artisan serve --host=0.0.0.0 --port=8000"

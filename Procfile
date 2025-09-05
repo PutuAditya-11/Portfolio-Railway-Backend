@@ -1,1 +1,1 @@
-web: vendor/bin/heroku-php-nginx public/
+web: php artisan serve --host=0.0.0.0 --port=8000
