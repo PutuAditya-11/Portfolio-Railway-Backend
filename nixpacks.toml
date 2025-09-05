@@ -14,10 +14,8 @@ nixPkgs = [
 cmds = [
   # install composer
   "curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer",
-  # buat symlink agar composer dikenal
-  "ln -s /usr/local/bin/composer /bin/composer",
-  # install dependency laravel
-  "composer install --no-dev --optimize-autoloader",
+  # pakai path absolut composer
+  "/usr/local/bin/composer install --no-dev --optimize-autoloader",
   # generate app key
   "php artisan key:generate --force"
 ]
