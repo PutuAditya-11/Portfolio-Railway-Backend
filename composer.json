@@ -46,6 +46,12 @@
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
+        "post-install-cmd": [
+          "@php artisan storage:link || true",
+          "@php artisan config:clear || true",
+          "@php artisan cache:clear || true"
+        ],
+
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\""
